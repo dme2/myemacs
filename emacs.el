@@ -29,7 +29,7 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#f2f2f2" "#a5a4a5"))
  '(package-selected-packages
    (quote
-    (evil-visual-mark-mode flycheck-irony company-irony-c-headers company-irony irony rtags scala-mode intero solarized-theme typescript-mode pdf-tools markdown-mode ox-gfm clojure-mode exec-path-from-shell treemacs doom-themes ## dracula-theme geiser slime erlang go-mode haskell-mode latex-preview-pane auctex auto-complete-clang auto-complete)))
+    (rust-mode evil-visual-mark-mode flycheck-irony company-irony-c-headers company-irony irony rtags scala-mode intero solarized-theme typescript-mode pdf-tools markdown-mode ox-gfm clojure-mode exec-path-from-shell treemacs doom-themes ## dracula-theme geiser slime erlang go-mode haskell-mode latex-preview-pane auctex auto-complete-clang auto-complete)))
  '(pdf-view-continuous t)
  '(pdf-view-display-size (quote fit-width))
  '(tool-bar-mode nil)
@@ -74,14 +74,8 @@
 (ac-config-default)
 
 (require 'rtags)
-(require 'company-rtags)
 
 (setq rtags-completions-enabled t)
-(eval-after-load 'company
-  '(add-to-list
-    'company-backends 'company-rtags))
-(setq rtags-autostart-diagnostics t)
-(rtags-enable-standard-keybindings)
 
 (require 'rtags-helm)
 (setq rtags-use-helm t)
@@ -123,3 +117,15 @@
   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
 
 (put 'downcase-region 'disabled nil)
+
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+
+(add-hook 'racer-mode-hook #'company-mode)
+
+(require 'rust-mode)
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(setq company-tooltip-align-annotations t)
+
+(setenv "PATH" (concat (getenv "PATH") ":/bin"))
+(setq exec-path (append exec-path '("/bin")))
