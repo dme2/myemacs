@@ -1,0 +1,6 @@
+#include "/home/dave/themes/Xresources-themes/iterm-Arthur.Xresources"
+
+Xft.rgba: rgb
+Xft.hintstyle: hintslight
+XTerm*faceName: "Source Code Pro: size=9: antialias=true"
+
